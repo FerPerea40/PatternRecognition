@@ -19,6 +19,7 @@ public class MinimaDistancia implements ClasificadorSupervisado {
 
     ArrayList<Patron> representativos;
     ArrayList<String> totalClases;
+
     public MinimaDistancia() {
         this.representativos = new ArrayList<>();
         this.totalClases = new ArrayList<>();
@@ -27,78 +28,56 @@ public class MinimaDistancia implements ClasificadorSupervisado {
     /*public MinimaDistancia(ArrayList<Patron> representativos) {
         this.representativos = representativos;
     }*/
-
     @Override
     public void entrenar(ArrayList<Patron> instancias) {
 
         ArrayList<Double> prom = new ArrayList<>();
-        //ArrayList<String> totalClases = new ArrayList<>();
-        double suma = 0;
 
         for (int i = 0; i < instancias.size(); i++) {
             totalClases.add(instancias.get(i).getClase());
         }
+
         Set<String> hashSet = new HashSet<String>(totalClases);
         totalClases.clear();
         totalClases.addAll(hashSet);
 
-       /* for (int i = 0; i < totalClases.size(); i++) {
-            System.out.println("-" + totalClases.get(i));
-        }*/
-        
-        
-        
         int n_clases = totalClases.size();
         int tam_vector = instancias.get(0).getVectorC().length;
         double[][] matriz_vectores = new double[n_clases][tam_vector];
+        int[] contadoresPromedio = new int[n_clases];
 
-        int [] contadoresPromedio = new int [n_clases];
-        
-        
         for (int i = 0; i < n_clases; i++) {      //vamos a hacer esto segun la cantidad de clases que tenemos
             String temporal = totalClases.get(i); //el temporal es para saber que clase evaluamos
             contadoresPromedio[i] = 0;
-            
+
             for (int j = 0; j < instancias.size(); j++) {  //siempre vamos a evaluar todas las instancias de nuestro arraylist de patrones
                 String comparar = instancias.get(j).getClase();
-                
+
                 if (temporal.equals(comparar)) { //si la instancia que evaluamos es igual a nuestro temporal
                     contadoresPromedio[i]++;//aumentamos en su contador respectivo
-                    
                     for (int y = 0; y < tam_vector; y++) { //sumamos cada columa "y" a su respectiva clase
                         matriz_vectores[i][y] += instancias.get(j).getVectorC()[y];
-                        
                     }
                 }
             }
         }
-        
-             //crearemos un ciclo para sacar el promedios de una vez, y mandar su respectivo vector  
+       //crearemos un ciclo para sacar el promedios de una vez, y mandar su respectivo vector  
         for (int i = 0; i < n_clases; i++) {
             double[] vectorFinal = new double[tam_vector];
             for (int y = 0; y < tam_vector; y++) {
                 vectorFinal[y] = matriz_vectores[i][y] / contadoresPromedio[i];
-                //System.out.println("Caracteristica "+y+" del vector representativo --->  "+vectorFinal[y]);
             }
-            
             representativos.add(new Patron(totalClases.get(i), "", vectorFinal));
-            
         }
-        
-
-
     }
 
-
-       public ArrayList<Patron> getRepresentativos() {
+    public ArrayList<Patron> getRepresentativos() {
         return representativos;
     }
 
     public void setRepresentativos(ArrayList<Patron> representativos) {
         this.representativos = representativos;
     }
-    
-    
 
     public static double calcularDistanciaEuclidiana(Patron a, Patron b) {
         double aux = 0;
@@ -116,12 +95,10 @@ public class MinimaDistancia implements ClasificadorSupervisado {
         int n_clase = 0;
 
         menorDis = calcularDistanciaEuclidiana(this.representativos.get(0), comparaPatron);//patron representativo 0, sera comparado con respecto al patron enviado por el usuario
-        // System.out.println("Distancia: " + menorDis);        
 
         for (int i = 1; i < this.representativos.size(); i++) { //ya usamos la pos 0
 
             actualDis = calcularDistanciaEuclidiana(this.representativos.get(i), comparaPatron);
-            //System.out.println("Distancia: " + actualDis);
 
             if (actualDis < menorDis) {
                 menorDis = actualDis;
@@ -133,27 +110,16 @@ public class MinimaDistancia implements ClasificadorSupervisado {
         comparaPatron.setClaseResultante(totalClases.get(n_clase));
     }
 
- public int eficacia(ArrayList<Patron> este) {
+    public int eficacia(ArrayList<Patron> este) {
         int n = 0;
         for (int k = 0; k < este.size(); k++) {
             if (este.get(k).getClaseResultante().equals(este.get(k).getClase())) {
                 n++;
             }
         }
-        System.out.println("N: "+n);
-        System.out.println("tam: "+este.size());
-        return (n*100)/este.size();
+        System.out.println("Aciertos: " + n);
+        System.out.println("Total de Elemnentos: " + este.size());
+        return (n * 100) / este.size();
     }
-    
+
 }
-
-
-
-
-
-
-
-
-
-
-    
