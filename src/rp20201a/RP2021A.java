@@ -32,7 +32,7 @@ public class RP2021A {
             System.out.println("Elemneto: " + (i+1) + " -> Clase: " + patrones2.get(i).getClase() + " -> Clase Resultante: " + patrones2.get(i).getClaseResultante());
         }
 
-        System.out.println("Eficacia: " + mn.eficacia(patrones2) + "%");
+        System.out.println("Eficacia: " + mn.eficacia(patrones2) + "222");
 
     }
 
