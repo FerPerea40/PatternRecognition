@@ -112,4 +112,5 @@ public class KNN implements ClasificadorSupervisado{
         return (n * 100) / este.size();
     }
     
-}
+ 
+   }

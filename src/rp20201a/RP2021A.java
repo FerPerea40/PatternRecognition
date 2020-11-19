@@ -32,7 +32,7 @@ public class RP2021A {
         }
       
         ArrayList<Patron> patrones1 = LeerDatos.tokenizarDataSet();
-        KNN k = new KNN(7);
+        KNN k = new KNN(3);
         k.entrenar(patrones1);
         
           ArrayList<Patron> patrones3 = LeerDatos.tokenizarDataSet();
