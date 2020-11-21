@@ -7,6 +7,7 @@ package clasificadores;
 
 import data.BurbujaOptimizado;
 import data.DistInsta;
+import data.MatrizConf;
 import data.Patron;
 import interfaces.ClasificadorSupervisado;
 import java.util.ArrayList;
@@ -23,10 +24,13 @@ public class KNN implements ClasificadorSupervisado{
      private DistInsta[] distancias;
      private DistInsta[] listaordenada;
      int K;
-   ArrayList<String> totalClases ;
+     ArrayList<String> totalClases ;
+     private MatrizConf matriz;
+     
      public KNN(int k) {
         this.patrones = new ArrayList<>();
         this.K=k;
+        this.matriz =  null;
     }
    
     @Override
@@ -107,10 +111,24 @@ public class KNN implements ClasificadorSupervisado{
                 n++;
             }
         }
-        System.out.println("Aciertos: " + n);
+        System.out.println("Aciertos de KNN: " + n);
         System.out.println("Total de Elemnentos: " + este.size());
         return (n * 100) / este.size();
     }
     
+ 
+    public void clasificar(ArrayList<Patron> patrones) {
+       for(Patron p: patrones){
+           clasificar(p);
+       }
+       this.matriz = new MatrizConf(patrones);
+    }
+
+    /**
+     * @return the mc
+     */
+    public MatrizConf getMc() {
+        return matriz;
+    }
  
    }

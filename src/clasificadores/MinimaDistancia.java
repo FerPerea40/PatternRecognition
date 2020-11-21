@@ -117,7 +117,7 @@ public class MinimaDistancia implements ClasificadorSupervisado {
                 n++;
             }
         }
-        System.out.println("Aciertos: " + n);
+        System.out.println("Aciertos Mínima Distancia: " + n);
         System.out.println("Total de Elemnentos: " + este.size());
         return (n * 100) / este.size();
     }

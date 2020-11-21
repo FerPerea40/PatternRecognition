@@ -24,36 +24,25 @@ public class RP2021A {
        ArrayList<Patron> patrones = LeerDatos.tokenizarDataSet();
         MinimaDistancia mn = new MinimaDistancia();
         mn.entrenar(patrones);
+        KNN k = new KNN(10);
+        k.entrenar(patrones);
 
-        ArrayList<Patron> patrones2 = LeerDatos.tokenizarDataSet();
-
-        for (int i = 0; i < patrones2.size(); i++) {
-            mn.clasificar(patrones2.get(i));
+     //   ArrayList<Patron> patrones2 = LeerDatos.tokenizarDataSet();
+   for (int i = 0; i < patrones.size(); i++) {
+            System.out.println("Resultado"+i+": ");
+            k.clasificar(patrones.get(i));
+          }
+        System.out.println("Eficacia KNN: " + k.eficacia(patrones) + "%");
+        for (int i = 0; i < patrones.size(); i++) {
+            mn.clasificar(patrones.get(i));
         }
       
-        ArrayList<Patron> patrones1 = LeerDatos.tokenizarDataSet();
-        KNN k = new KNN(3);
-        k.entrenar(patrones1);
-        
-          ArrayList<Patron> patrones3 = LeerDatos.tokenizarDataSet();
+      //  ArrayList<Patron> patrones3 = LeerDatos.tokenizarDataSet();
           
-          for (int i = 0; i < patrones3.size(); i++) {
-            System.out.println("Resultado"+i+": ");
-            k.clasificar(patrones3.get(i));
-          }
-        System.out.println("Eficacia KNN: " + k.eficacia(patrones3) + "%");
-       System.out.println("Eficacia MD: " + mn.eficacia(patrones2) + "%");
-        /*
-        ArrayList<Patron> patrones2 = LeerDatos.tokenizarDataSet();
-
-        for (int i = 0; i < patrones2.size(); i++) {
-            mn.clasificar(patrones2.get(i));
-        }
-        for (int i = 0; i < patrones2.size(); i++) {
-            System.out.println("Elemneto: " + (i+1) + " -> Clase: " + patrones2.get(i).getClase() + " -> Clase Resultante: " + patrones2.get(i).getClaseResultante());
-        }
-
-        System.out.println("Eficacia: " + mn.eficacia(patrones2) + "222");*/
+       
+        
+       System.out.println("Eficacia MD: " + mn.eficacia(patrones) + "%");
+       
+        
     }
-
 }
