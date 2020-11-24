@@ -104,16 +104,7 @@ System.exit(0);
 }
 });
 }
-    
- /*   public static void main(String ar[]) {
-//MatrizConf frame = new MatrizConf();
-frame.pack();
-frame.setVisible(true);
-
-
-}
-    */
-}
+  }
 
 
 
