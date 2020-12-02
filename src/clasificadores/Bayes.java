@@ -30,6 +30,7 @@ public class Bayes implements ClasificadorSupervisado {
     ArrayList<Double> promClase;
     double evidencia;
     ArrayList<String> totalClases;
+     private MatrizConf matriz;
 
     public Bayes() {
         this.promedios = new ArrayList<>();
@@ -75,7 +76,6 @@ public class Bayes implements ClasificadorSupervisado {
                 evidencia = evidencia * distnorm.get(i).getVectorC()[j];
             }
             double[]posaux = {evidencia/auxevi};
-          
             post.add(new Patron(distnorm.get(i).getClase(),"",posaux));
         }
         
@@ -86,12 +86,10 @@ public class Bayes implements ClasificadorSupervisado {
               if(post.get(i).getVectorC()[0]>may){
               may=post.get(i).getVectorC()[0];
               clasemay=i;
-              System.out.println("La clase"+clasemay);
                 }
            patron.setClaseResultante(post.get(clasemay).getClase());
                 }
         
-System.out.println("La clase resultante: "+post.get(clasemay).getClase()+" y era: "+patron.getClase());
    post.clear();
    distnorm.clear();
     }
@@ -215,8 +213,8 @@ System.out.println("La clase resultante: "+post.get(clasemay).getClase()+" y era
         return distnorm;
     }
 
- public int eficacia(ArrayList<Patron> este) {
-        int n = 0;
+ public double eficacia(ArrayList<Patron> este) {
+        double n = 0;
         for (int k = 0; k < este.size(); k++) {
             if (este.get(k).getClaseResultante().equals(este.get(k).getClase())) {
                 n++;
@@ -225,6 +223,23 @@ System.out.println("La clase resultante: "+post.get(clasemay).getClase()+" y era
         System.out.println("Aciertos de Bayes: " + n);
         System.out.println("Total de Elemnentos: " + este.size());
         return (n * 100) / este.size();
+    }
+ 
+   public void generarMat(ArrayList<Patron> patrones) {
+      
+       this.matriz = new MatrizConf(patrones);
+          this.matriz.generartabla("Bayes");
+         
+  this.matriz.pack();
+  this.matriz.setVisible(true);
+       
+    }
+
+    /**
+     * @return the mc
+     */
+    public MatrizConf getMc() {
+        return matriz;
     }
 
 }

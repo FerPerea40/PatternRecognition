@@ -5,6 +5,7 @@
  */
 package clasificadores;
 
+import data.MatrizConf;
 import data.Patron;
 import interfaces.ClasificadorSupervisado;
 import java.util.ArrayList;
@@ -19,6 +20,7 @@ public class MinimaDistancia implements ClasificadorSupervisado {
 
     ArrayList<Patron> representativos;
     ArrayList<String> totalClases;
+     private MatrizConf matriz;
 
     public MinimaDistancia() {
         this.representativos = new ArrayList<>();
@@ -121,5 +123,20 @@ public class MinimaDistancia implements ClasificadorSupervisado {
         System.out.println("Total de Elemnentos: " + este.size());
         return (n * 100) / este.size();
     }
+    public void generarMat(ArrayList<Patron> patrones) {
+      
+       this.matriz = new MatrizConf(patrones);
+          this.matriz.generartabla("Minima Distancia");
+         
+  this.matriz.pack();
+  this.matriz.setVisible(true);
+       
+    }
 
+    /**
+     * @return the mc
+     */
+    public MatrizConf getMc() {
+        return matriz;
+    }
 }

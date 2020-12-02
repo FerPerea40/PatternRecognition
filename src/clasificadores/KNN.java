@@ -49,7 +49,6 @@ public class KNN implements ClasificadorSupervisado{
           sacarListado(comparaPatron);
           BurbujaOptimizado bo  = new BurbujaOptimizado();
           listaordenada =  bo.ordenarLists(distancias);
-          System.out.println("La clase resultante: "+asignarClase_profe()+" y era: "+comparaPatron.getClase());
           comparaPatron.setClaseResultante(asignarClase_profe());
           
           
@@ -117,7 +116,7 @@ public class KNN implements ClasificadorSupervisado{
     public void generarMat(ArrayList<Patron> patrones) {
       
        this.matriz = new MatrizConf(patrones);
-          this.matriz.generartabla();
+          this.matriz.generartabla("KNN");
          
   this.matriz.pack();
   this.matriz.setVisible(true);

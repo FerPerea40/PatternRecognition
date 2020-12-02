@@ -44,9 +44,7 @@ public class MatrizConf extends JFrame{
                 this.clases.add(p.getClase());
            }
        }
-       for(int p=0; p<this.clases.size();p++){
-       System.out.println("Esty en inicializar matriz:"+this.clases.get(p));
-       }
+     
        int m = this.clases.size();
        this.matriz = new double[m][m+1];
        // recorremos las instancias nuevamente
@@ -60,7 +58,7 @@ public class MatrizConf extends JFrame{
     }
 
        
-    public void generartabla(){
+    public void generartabla(String nombre){
     
 
 //array bidimencional de objetos con los datos de la tabla
@@ -77,7 +75,7 @@ Object[][] data = new Object[this.clases.size()+1][this.clases.size()+1];
              }
         }
 String[] columnNames = new String[this.clases.size()+1];
-columnNames[0]=" ";
+columnNames[0]="Tabla: "+nombre;
 for(int i=1;i<=this.clases.size();i++){
      columnNames[i] = this.clases.get(i-1);
 }
