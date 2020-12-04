@@ -8,6 +8,7 @@ package rp20201a;
 import clasificadores.Bayes;
 import clasificadores.KNN;
 import clasificadores.MinimaDistancia;
+import clusters.cmeans;
 import data.Patron;
 import data.LeerDatos;
 import data.MatrizConf;
@@ -24,7 +25,7 @@ public class RP2021A {
     public static void main(String[] args) throws IOException {
 
        ArrayList<Patron> patrones = LeerDatos.tokenizarDataSet();
-        MinimaDistancia mn = new MinimaDistancia();
+     /*   MinimaDistancia mn = new MinimaDistancia();
         mn.entrenar(patrones);
         KNN k = new KNN(3);
         k.entrenar(patrones);
@@ -49,6 +50,13 @@ public class RP2021A {
             b.clasificar(patrones.get(i));
           }
          System.out.println("Eficacia Bayes: " + b.eficacia(patrones) + "%");
-          b.generarMat(patrones);
+          b.generarMat(patrones);*/
+     
+     cmeans cm = new cmeans(2);
+     cm.entrenar(patrones);
+     cm.clasificar();
+     cm.imprimirfinal();
+  
+         // cm.generarMat(patrones);
     }
 }

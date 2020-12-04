@@ -27,6 +27,7 @@ public class Patron {
         this.num_clas = num_clas;
     }
 
+    
     public String getClase() {
         return clase;
     }
