@@ -52,7 +52,7 @@ public class RP2021A {
          System.out.println("Eficacia Bayes: " + b.eficacia(patrones) + "%");
           b.generarMat(patrones);*/
      
-     cmeans cm = new cmeans(2);
+     cmeans cm = new cmeans(3);
      cm.entrenar(patrones);
      cm.clasificar();
      cm.imprimirfinal();

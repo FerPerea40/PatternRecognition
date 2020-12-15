@@ -74,7 +74,7 @@ public class cmeans implements ClasificadorNoSupervisado {
 
                 }
             }
-            for (int i = 0; i < this.representativos.size(); i++) {
+           for (int i = 0; i < this.representativos.size(); i++) {
 
                 System.out.println("Clase: " + this.representativos.get(i).getClase() + " Vector: " + this.representativos.get(i).getVectorC()[0]
                         + " ---- " + this.representativos.get(i).getVectorC()[1]
@@ -91,7 +91,7 @@ public class cmeans implements ClasificadorNoSupervisado {
                     + " ---- " + this.representativos.get(i).getVectorC()[2]
                     + " ---- " + this.representativos.get(i).getVectorC()[3]);
         }
-        System.out.println("Listo");
+       // System.out.println("Listo");
 
     }
 
@@ -162,8 +162,10 @@ public class cmeans implements ClasificadorNoSupervisado {
 
     public void imprimirfinal() {
         for (int i = 0; i < this.patrones.size(); i++) {
-
-            System.out.println("Clase: " + this.patrones.get(i).getClase() + "  Clase Resultante" + this.patrones.get(i).getClaseResultante());
+            System.out.println("  Clase: " + this.patrones.get(i).getClase() + "  Clase Resultante -->" + this.patrones.get(i).getClaseResultante());
+            /*if(i%2!=0){
+            System.out.println();
+            }*/
         }
 
     }
