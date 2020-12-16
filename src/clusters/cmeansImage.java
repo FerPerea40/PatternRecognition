@@ -5,9 +5,16 @@
  */
 package clusters;
 
+import static com.sun.org.apache.xalan.internal.xsltc.compiler.util.Type.Int;
+import data.JframeImagen;
 import data.MatrizConf;
 import data.Patron;
+import data.PatronImg;
+import data.SeleccImg;
 import interfaces.ClasificadorNoSupervisado;
+import java.awt.Color;
+import java.awt.Image;
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
@@ -18,25 +25,40 @@ import java.util.Set;
  *
  * @author Dell
  */
-public class cmeans implements ClasificadorNoSupervisado {
+public class cmeansImage implements ClasificadorNoSupervisado {
 
-    ArrayList<Patron> representativos;
-    ArrayList<Patron> patrones;
+    ArrayList<PatronImg> representativos;
+    ArrayList<PatronImg> patrones;
     private int C;
     private MatrizConf matriz;
-
-    public cmeans(int C) {
+    BufferedImage bi;
+    public cmeansImage (int C) {
         this.patrones = new ArrayList<>();
         this.representativos = new ArrayList<>();
         this.C = C;
         this.matriz = null;
     }
 
-    @Override
-    public void entrenar(ArrayList<Patron> instancias) {
-        patrones = instancias;
-    }
+   public void entrenamiento(Image imagenOriginal){
+        // generar la coleccion de instancias obtenidas de los colores de la imagen 
+       bi = SeleccImg.toBufferedImage(imagenOriginal);
+                JframeImagen frame = new JframeImagen(imagenOriginal);
 
+        ArrayList<PatronImg> instancias = new ArrayList<>();
+        // recorremos la imagen
+        Color color;
+        for(int x=0; x<bi.getWidth();x++){
+            for(int y = 0 ; y<bi.getHeight();y++){
+                int rgb = bi.getRGB(x, y);
+                color = new Color(rgb);
+                patrones.add(new PatronImg(x, y,new double[]{color.getRed(),
+                    color.getGreen(),
+                    color.getBlue()}));
+            }
+        }
+   }
+        
+  
     @Override
     public void clasificar(Patron comparaPatron) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
@@ -46,30 +68,29 @@ public class cmeans implements ClasificadorNoSupervisado {
         int clus = 1;
         int ele;
         Random ran = new Random();
-        ArrayList<Patron> nuevos;
+        ArrayList<PatronImg> nuevos;
 
         ele = ran.nextInt(patrones.size());
-        representativos.add(new Patron("" + 0, "" + 0, patrones.get(ele).getVectorC()));
+        representativos.add(new PatronImg(0,  0, patrones.get(ele).getVectorC()));
 
         while (clus < this.C) {
             ele = ran.nextInt(patrones.size());
             if (!busca(patrones.get(ele), clus)) {
-                representativos.add(new Patron("" + clus, "" + clus, patrones.get(ele).getVectorC()));
+                representativos.add(new PatronImg( patrones.get(ele).getX(),patrones.get(ele).getX(), patrones.get(ele).getVectorC()));
                 clus++;
 
             }
         }
+                        System.out.println();
         do {
-            for (Patron aux : patrones) {
-                double distC = data.DistInsta.calculaDistanciaEcuclidiana(aux, this.representativos.get(0));
+            for (PatronImg aux : patrones) {
+                double distC = data.SeleccImg.calcularDistEucli(aux, this.representativos.get(0));
                 aux.setClaseResultante(this.representativos.get(0).getClase());
-
                 for (int x = 1; x < this.representativos.size(); x++) {
-                    double daux = data.DistInsta.calculaDistanciaEcuclidiana(aux, this.representativos.get(x));
+                    double daux = data.SeleccImg.calcularDistEucli(aux, this.representativos.get(x));
                     if (daux < distC) {
                         distC = daux;
                         aux.setClaseResultante(this.representativos.get(x).getClase());
-
                     }
 
                 }
@@ -79,7 +100,7 @@ public class cmeans implements ClasificadorNoSupervisado {
                 System.out.println("Clase: " + this.representativos.get(i).getClase() + " Vector: " + this.representativos.get(i).getVectorC()[0]
                         + " ---- " + this.representativos.get(i).getVectorC()[1]
                         + " ---- " + this.representativos.get(i).getVectorC()[2]
-                        + " ---- " + this.representativos.get(i).getVectorC()[3]);
+                       );
             }
             nuevos = promediar(patrones);
 
@@ -89,19 +110,33 @@ public class cmeans implements ClasificadorNoSupervisado {
             System.out.println("Clase: " + this.representativos.get(i).getClase() + " Vector: " + this.representativos.get(i).getVectorC()[0]
                     + " ---- " + this.representativos.get(i).getVectorC()[1]
                     + " ---- " + this.representativos.get(i).getVectorC()[2]
-                    + " ---- " + this.representativos.get(i).getVectorC()[3]);
+                   );
         }
-       // System.out.println("Listo");
+                 
+        System.out.println("Listo");
+ for (PatronImg aux : patrones) {
+               for (int x = 0; x < this.representativos.size(); x++) {
+                    
+                    if (aux.getClaseResultante() == this.representativos.get(x).getClase()) {
+                        aux.setVectorC(this.representativos.get(x).getVectorC());
+                    }
+
+                }
+            }
+         System.out.println("Listo");
 
     }
 
-    public ArrayList<Patron> promediar(ArrayList<Patron> instancias) {
+    public ArrayList<PatronImg> promediar(ArrayList<PatronImg> instancias) {
         ArrayList<String> totalClases = new ArrayList<>();
-
-        ArrayList<Patron> prom = new ArrayList<>();
+        ArrayList<String> x = new ArrayList<>();
+        ArrayList<String> r = new ArrayList<>();
+        ArrayList<PatronImg> prom = new ArrayList<>();
         prom.clear();
         for (int i = 0; i < instancias.size(); i++) {
             totalClases.add(instancias.get(i).getClaseResultante());
+            x.add(""+instancias.get(i).getX());
+            r.add(""+instancias.get(i).getY());
         }
 
         Set<String> hashSet = new HashSet<String>(totalClases);
@@ -134,12 +169,12 @@ public class cmeans implements ClasificadorNoSupervisado {
             for (int y = 0; y < tam_vector; y++) {
                 vectorFinal[y] = matriz_vectores[i][y] / contadoresPromedio[i];
             }
-            prom.add(new Patron(totalClases.get(i), totalClases.get(i),vectorFinal));
+            prom.add(new PatronImg(Integer.parseInt(x.get(i)),Integer.parseInt(r.get(i)),new double[]{(int)vectorFinal[0],(int)vectorFinal[1],(int)vectorFinal[2]}));
         }
         return prom;
     }
 
-    private boolean busca(Patron get, int tam) {
+    private boolean busca(PatronImg get, int tam) {
         for (int i = 0; i < tam; i++) {
             if (this.representativos.get(i).getVectorC().equals(get)) {
                 return true;
@@ -148,7 +183,7 @@ public class cmeans implements ClasificadorNoSupervisado {
         return false;
     }
 
-    private boolean sonDiferentes(ArrayList<Patron> nuevos) {
+    private boolean sonDiferentes(ArrayList<PatronImg> nuevos) {
         // si se determina que son diferentes susituimos a los actuales.
         for (int x = 0; x < nuevos.size(); x++) {
             if (!Arrays.equals(nuevos.get(x).getVectorC(), this.representativos.get(x).getVectorC())) {
@@ -161,42 +196,33 @@ public class cmeans implements ClasificadorNoSupervisado {
     }
 
     public void imprimirfinal() {
-        for (int i = 0; i < this.patrones.size(); i++) {
+        
+         BufferedImage nuevo = new BufferedImage(bi.getWidth(),bi.getHeight(),BufferedImage.TYPE_INT_RGB);
+        
+        for(PatronImg p: patrones){
+            int x = p.getX();
+            int y = p.getY();
+            nuevo.setRGB(x, y,Integer.parseInt(p.getClaseResultante()));
+        }
+        
+        Image imagencluster = SeleccImg.toImage(nuevo);
+       
+         JframeImagen frame = new JframeImagen(imagencluster);
+       /* for (int i = 0; i < this.patrones.size(); i++) {
             System.out.println("  Clase: " + this.patrones.get(i).getClase() + "  Clase Resultante -->" + this.patrones.get(i).getClaseResultante());
             /*if(i%2!=0){
             System.out.println();
-            }*/
-        }
-
-    }
-
-    public int eficacia(ArrayList<Patron> este) {
-        int n = 0;
-        for (int k = 0; k < este.size(); k++) {
-            if (este.get(k).getClaseResultante().equals(este.get(k).getClase())) {
-                n++;
             }
-        }
-        System.out.println("Aciertos Mínima Distancia: " + n);
-        System.out.println("Total de Elemnentos: " + este.size());
-        return (n * 100) / este.size();
-    }
-
-    public void generarMat(ArrayList<Patron> patrones) {
-
-        this.matriz = new MatrizConf(patrones);
-        this.matriz.generartabla("Minima Distancia");
-
-        this.matriz.pack();
-        this.matriz.setVisible(true);
+        }*/
 
     }
 
-    /**
-     * @return the mc
-     */
-    public MatrizConf getMc() {
-        return matriz;
+    @Override
+    public void entrenar(ArrayList<Patron> instancias) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+
+  
 
 }
+
