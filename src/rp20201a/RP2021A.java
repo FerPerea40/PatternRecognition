@@ -7,15 +7,18 @@ package rp20201a;
 
 import clasificadores.Bayes;
 import clasificadores.KNN;
-import clasificadores.Min_Max;
+import clusters.Min_Max;
 import clasificadores.MinimaDistancia;
+import clasificadores.lernMatrix;
 import clusters.cmeans;
 import clusters.cmeansImage;
 import data.JframeImagen;
 import data.Patron;
 import data.LeerDatos;
+import data.LeerVectorBin;
 import data.MatrizConf;
 import data.SeleccImg;
+import data.VectorBinario;
 import java.io.IOException;
 import static java.lang.System.out;
 import java.util.ArrayList;
@@ -28,7 +31,7 @@ public class RP2021A {
 
     public static void main(String[] args) throws IOException {
 
-        ArrayList<Patron> patrones = LeerDatos.tokenizarDataSet();
+       // ArrayList<Patron> patrones = LeerDatos.tokenizarDataSet();
         /*   MinimaDistancia mn = new MinimaDistancia();
         mn.entrenar(patrones);
         KNN k = new KNN(3);
@@ -62,7 +65,17 @@ public class RP2021A {
      cmi.clasificar();
      cmi.imprimirfinal();
          // cm.generarMat(patrones);*/
-        Min_Max mM = new Min_Max(patrones, .91);
-        mM.clasifica();
+      
+/* Min_Max mM = new Min_Max(patrones, .91);
+        mM.clasifica();*/
+
+VectorBinario vectores = LeerVectorBin.obtenerDataset();
+lernMatrix lm  =new lernMatrix(vectores);
+lm.aprendizaje();
+lm.recuperacion(new double[] {1,0,1,0,1,1});
+lm.recuperacion(new double[] {1,1,0,0,1,1});
+lm.recuperacion(new double[] {1,0,1,1,0,1});
+lm.recuperacion(new double[] {0,1,0,1,1,1});
+lm.recuperacion(new double[] {0,0,1,0,1,0});
     }
 }
