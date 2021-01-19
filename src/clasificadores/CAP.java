@@ -28,7 +28,7 @@ public class CAP {
     public CAP() {
     }
 
-    public CAP(ArrayList<Patron> patrones) {
+    public CAP(ArrayList<Patron> patrones) { 
         this.clases = num_clases(patrones);
         this.patrones = patrones;
         this.clasbin = crearbin(this.clases);
