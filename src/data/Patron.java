@@ -14,6 +14,9 @@ public class Patron {
     private String clase;
     private String claseResultante;
     private double[] vectorC;
+    private double[] vectorBin;
+    private double[] vectorBinres;
+
     private int num_clas;
     private int x,y;
     
@@ -100,6 +103,22 @@ public class Patron {
 
     public void setNum_clas(int num_clas) {
         this.num_clas = num_clas;
+    }
+
+    public double[] getVectorBin() {
+        return vectorBin;
+    }
+
+    public void setVectorBin(double[] vectorBin) {
+        this.vectorBin = vectorBin;
+    }
+
+    public double[] getVectorBinres() {
+        return vectorBinres;
+    }
+
+    public void setVectorBinres(double[] vectorBinres) {
+        this.vectorBinres = vectorBinres;
     }
 
 }

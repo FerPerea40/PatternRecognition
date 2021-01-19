@@ -20,8 +20,9 @@ import javax.swing.JOptionPane;
  * @author working
  */
 public class LeerDatos {
+    private static int clasestotales;
     
-    public static ArrayList<Patron> tokenizarDataSet() throws IOException{
+    public  static ArrayList<Patron> tokenizarDataSet() throws IOException{
     // ventana para abrir el txt
     
      String texto, aux;
@@ -50,7 +51,7 @@ public class LeerDatos {
                 ArrayList<String> lista2 = new ArrayList<>();
                 String clase = "";
                 String claseComp="";
-                int n = 0;
+                clasestotales = 0;
                 for (int i = 0; i < lista.size(); i++) {
                     StringTokenizer st = new StringTokenizer(lista.get(i), ",");
 
@@ -67,7 +68,7 @@ public class LeerDatos {
                         claseComp = clase;
                         clase = lista2.get(lista2.size()-1);
                         if(!clase.equals(claseComp)){
-                           n++;
+                                                      clasestotales++;
                            patrones.add(new Patron(clase,"",vector));
                         }else{
                            patrones.add(new Patron(clase,"",vector));
@@ -75,7 +76,7 @@ public class LeerDatos {
                      
                     lista2.clear();
                 }
-          
+
             }
         } catch (IOException ex) {
             JOptionPane.showMessageDialog(null, ex + ""
@@ -85,6 +86,14 @@ public class LeerDatos {
         }
        
         return patrones;
+    }
+
+    public int getClasestotales() {
+        return clasestotales;
+    }
+
+    public void setClasestotales(int clasestotales) {
+        this.clasestotales = clasestotales;
     }
     
     

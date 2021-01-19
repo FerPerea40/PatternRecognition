@@ -6,6 +6,7 @@
 package rp20201a;
 
 import clasificadores.Bayes;
+import clasificadores.CAP;
 import clasificadores.KNN;
 import clusters.Min_Max;
 import clasificadores.MinimaDistancia;
@@ -31,7 +32,7 @@ public class RP2021A {
 
     public static void main(String[] args) throws IOException {
 
-       // ArrayList<Patron> patrones = LeerDatos.tokenizarDataSet();
+       ArrayList<Patron> patrones = LeerDatos.tokenizarDataSet();
         /*   MinimaDistancia mn = new MinimaDistancia();
         mn.entrenar(patrones);
         KNN k = new KNN(3);
@@ -69,13 +70,12 @@ public class RP2021A {
 /* Min_Max mM = new Min_Max(patrones, .91);
         mM.clasifica();*/
 
-VectorBinario vectores = LeerVectorBin.obtenerDataset();
-lernMatrix lm  =new lernMatrix(vectores);
-lm.aprendizaje();
-lm.recuperacion(new double[] {1,0,1,0,1,1});
-lm.recuperacion(new double[] {1,1,0,0,1,1});
-lm.recuperacion(new double[] {1,0,1,1,0,1});
-lm.recuperacion(new double[] {0,1,0,1,1,1});
-lm.recuperacion(new double[] {0,0,1,0,1,0});
+CAP c = new CAP(patrones);
+c.aprendizaje();
+for(int i=0;i<patrones.size();i++){
+
+c.recuperacion(patrones.get(i));
+}
+System.out.println("Eficacia : "+c.eficacia(patrones)+"%");
     }
 }
