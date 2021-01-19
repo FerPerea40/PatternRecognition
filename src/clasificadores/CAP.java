@@ -59,7 +59,6 @@ public class CAP {
                     }
                 }
             }
-
         }
         this.matrizC = r;
 
@@ -96,22 +95,20 @@ public class CAP {
                 nB[y] = 1;
             } else {
                 nB[y] = 0;
-
             }
         }
         Consulta.setVectorBinres(nB);
 
-        
-
-           for(int r=0;r<this.patrones.get(0).getVectorBinres().length;r++)
-             if(Consulta.getVectorBinres()[r]==1){
-              Consulta.setClaseResultante(this.totalClases.get(r));
-                       }
+        for (int r = 0; r < this.patrones.get(0).getVectorBinres().length; r++) {
+            if (Consulta.getVectorBinres()[r] == 1) {
+                Consulta.setClaseResultante(this.totalClases.get(r));
+            }
+        }
 
     }
-    public void asignarResult(){
 
-            
+    public void asignarResult() {
+
     }
 
     public double[] promedio(ArrayList<Patron> instancias) {
