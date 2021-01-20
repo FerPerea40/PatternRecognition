@@ -50,16 +50,23 @@ public class CAP {
         totalClases.addAll(hashSet);
         double sum = 0;
         double[][] r = new double[totalClases.size()][this.nuevospatrones.get(0).getVectorC().length];
-
+int cont=0;
         for (int i = 0; i < totalClases.size(); i++) {
             for (int j = 0; j < nuevospatrones.size(); j++) {
                 if (nuevospatrones.get(j).getClase().equals(totalClases.get(i))) {
+                    cont++;
                     for (int x = 0; x < nuevospatrones.get(0).getVectorC().length; x++) {
                         r[i][x] += nuevospatrones.get(j).getVectorC()[x];
                     }
                 }
             }
-        }
+
+
+            }
+            
+  
+        
+        
         this.matrizC = r;
 
     }
@@ -209,7 +216,7 @@ public class CAP {
                 n++;
             }
         }
-        System.out.println("Aciertos Mínima Distancia: " + n);
+        System.out.println("Aciertos CAP: " + n);
         System.out.println("Total de Elemnentos: " + este.size());
         return (n * 100) / este.size();
     }

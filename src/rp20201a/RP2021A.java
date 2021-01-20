@@ -32,7 +32,7 @@ public class RP2021A {
 
     public static void main(String[] args) throws IOException {
 
-       //ArrayList<Patron> patrones = LeerDatos.tokenizarDataSet();
+       ArrayList<Patron> patrones = LeerDatos.tokenizarDataSet();
         /*   MinimaDistancia mn = new MinimaDistancia();
         mn.entrenar(patrones);
         KNN k = new KNN(3);
@@ -73,23 +73,29 @@ public class RP2021A {
 
 
  
-VectorBinario vectores = LeerVectorBin.obtenerDataset();
-lernMatrix lm  =new lernMatrix(vectores);
-lm.aprendizaje();
-lm.recuperacion(new double[] {1,0,1,0,1});
-lm.recuperacion(new double[] {1,1,0,0,1});
-lm.recuperacion(new double[] {1,0,1,1,0});
-lm.recuperacion(new double[] {0,1,0,1,1});
-lm.recuperacion(new double[] {0,0,1,0,1});
+//VectorBinario vectores = LeerVectorBin.obtenerDataset();
+//lernMatrix lm  =new lernMatrix(vectores);
+//lm.aprendizaje();
+//lm.recuperacion(new double[] {1,0,1,0,1});
+//lm.recuperacion(new double[] {1,1,0,0,1});
+//lm.recuperacion(new double[] {1,0,1,1,0});
+//lm.recuperacion(new double[] {0,1,0,1,1});
+//lm.recuperacion(new double[] {0,0,1,0,1});
 
  
-/*CAP c = new CAP(patrones);
+CAP c = new CAP(patrones);
 c.aprendizaje();
 for(int i=0;i<patrones.size();i++){
-
 c.recuperacion(patrones.get(i));
 }
-System.out.println("Eficacia : "+c.eficacia(patrones)+"%");*/
+for(int i=1;i<=patrones.size();i++){
+    if(i%3==0){
+    System.out.println(i+"# Dato: "+patrones.get(i-1).getClase()+" --> "+patrones.get(i-1).getClaseResultante()+"  ");
+    }else{
+    System.out.print(i+"# Dato: "+patrones.get(i-1).getClase()+" --> "+patrones.get(i-1).getClaseResultante()+"  ");
+    }
+}
+System.out.println("Eficacia : "+c.eficacia(patrones)+"%");
     }
 }
 
