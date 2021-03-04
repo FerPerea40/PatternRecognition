@@ -5,6 +5,7 @@
  */
 package rp20201a;
 
+import RedesNeuronales.PerceptronSimple;
 import clasificadores.Bayes;
 import clasificadores.CAP;
 import clasificadores.KNN;
@@ -32,7 +33,6 @@ public class RP2021A {
 
     public static void main(String[] args) throws IOException {
 
-       ArrayList<Patron> patrones = LeerDatos.tokenizarDataSet();
         /*   MinimaDistancia mn = new MinimaDistancia();
         mn.entrenar(patrones);
         KNN k = new KNN(3);
@@ -83,7 +83,7 @@ public class RP2021A {
 //lm.recuperacion(new double[] {0,0,1,0,1});
 
  
-CAP c = new CAP(patrones);
+/*CAP c = new CAP(patrones);
 c.aprendizaje();
 for(int i=0;i<patrones.size();i++){
 c.recuperacion(patrones.get(i));
@@ -96,6 +96,42 @@ for(int i=1;i<=patrones.size();i++){
     }
 }
 System.out.println("Eficacia : "+c.eficacia(patrones)+"%");
+    */
+ 
+System.out.println("Prueba con AND");
+ ArrayList<Patron> patrones = LeerDatos.tokenizarDataSet();
+ ArrayList<Patron> patronesor = LeerDatos.tokenizarDataSet();
+ ArrayList<Patron> patronesxor = LeerDatos.tokenizarDataSet();
+
+ PerceptronSimple ps = new PerceptronSimple(patrones,1,0.4);
+ ps.entrenar();
+ ps.Clasificar( new Patron("", "", new double[] {-1,1}));
+ ps.Clasificar( new Patron("", "", new double[] {1,1}));
+ ps.Clasificar( new Patron("", "", new double[] {1,-1}));
+ ps.Clasificar( new Patron("", "", new double[] {-1,-1}));
+ 
+ System.out.println("Prueba con OR");
+
+
+ ps = new PerceptronSimple(patronesor,1,0.4);
+ ps.entrenar();
+ ps.Clasificar( new Patron("", "", new double[] {-1,1}));
+ ps.Clasificar( new Patron("", "", new double[] {1,1}));
+ ps.Clasificar( new Patron("", "", new double[] {1,-1}));
+ ps.Clasificar( new Patron("", "", new double[] {-1,-1}));
+
+ System.out.println("Prueba con XOR");
+
+
+   ps = new PerceptronSimple(patronesxor,1,0.4);
+ ps.entrenarXOR();
+ ps.ClasificarXOR( new Patron("", "", new double[] {0,1}));
+ ps.ClasificarXOR( new Patron("", "", new double[] {1,1}));
+ ps.ClasificarXOR( new Patron("", "", new double[] {1,0}));
+ ps.ClasificarXOR( new Patron("", "", new double[] {0,0}));
+// for(int i=0;i<patrones.size();i++){
+// System.out.println("Salida: "+ps.clasifica(patrones.get(i)));
+// }
     }
 }
 
